@@ -2,9 +2,7 @@ package udovyk.testassignment.di;
 
 
 import android.app.Application;
-
 import javax.inject.Singleton;
-
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjector;

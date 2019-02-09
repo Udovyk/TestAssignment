@@ -1,7 +1,6 @@
 package udovyk.testassignment.ui.userslist.paging;
 
 import android.arch.paging.PagedListAdapter;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-
 import udovyk.testassignment.R;
 import udovyk.testassignment.network.model.ResultsItem;
 
@@ -41,8 +37,6 @@ public class ItemAdapter extends PagedListAdapter<ResultsItem, ItemAdapter.ItemV
             Glide.with(holder.itemView.getContext())
                     .load(item.picture.medium)
                     .into(holder.imageView);
-        }else{
-
         }
     }
 

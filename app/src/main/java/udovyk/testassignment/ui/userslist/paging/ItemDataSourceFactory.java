@@ -3,7 +3,6 @@ package udovyk.testassignment.ui.userslist.paging;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.paging.DataSource;
 import android.arch.paging.PageKeyedDataSource;
-
 import javax.inject.Inject;
 
 import udovyk.testassignment.network.ApiManager;
@@ -12,10 +11,7 @@ import udovyk.testassignment.network.model.ResultsItem;
 public class ItemDataSourceFactory extends DataSource.Factory {
 
     private MutableLiveData<PageKeyedDataSource<Integer, ResultsItem>> itemLiveDataSource = new MutableLiveData<>();
-
-    //todo inject in constr ??
-
-    ApiManager apiManager;
+    private ApiManager apiManager;
 
     @Inject
     public ItemDataSourceFactory(ApiManager apiManager) {

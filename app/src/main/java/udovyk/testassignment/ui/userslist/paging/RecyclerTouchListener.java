@@ -17,10 +17,8 @@ public class RecyclerTouchListener extends GestureDetector.SimpleOnGestureListen
     }
 
     private GestureDetector gestureDetector = new GestureDetector(context, this);
-
     public ClickListener listener = null;
-
-    public RecyclerView rv = null;
+    private RecyclerView rv = null;
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
@@ -54,7 +52,6 @@ public class RecyclerTouchListener extends GestureDetector.SimpleOnGestureListen
     public void onRequestDisallowInterceptTouchEvent(boolean b) {
 
     }
-
 
     public interface ClickListener {
         void onPress(int position, View view);

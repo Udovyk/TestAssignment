@@ -2,37 +2,24 @@ package udovyk.testassignment.ui.userslist.paging;
 
 import android.arch.paging.PageKeyedDataSource;
 import android.support.annotation.NonNull;
-
 import javax.inject.Inject;
-
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 import udovyk.testassignment.network.ApiManager;
-import udovyk.testassignment.network.ApiService;
 import udovyk.testassignment.network.model.ResultsItem;
-import udovyk.testassignment.network.model.UserResponse;
 
 public class ItemDataSource extends PageKeyedDataSource<Integer, ResultsItem> {
 
     private CompositeDisposable disposable = new CompositeDisposable();
-
-
-    ApiManager apiManager;
-
+    private ApiManager apiManager;
     public static final int PAGE_SIZE = 20;
-
     public static final int FIRST_PAGE = 1;
-
 
     @Inject
     public ItemDataSource(ApiManager apiManager) {
         this.apiManager = apiManager;
     }
-
-
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, ResultsItem> callback) {
@@ -67,7 +54,6 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ResultsItem> {
                         },
                         Throwable::printStackTrace
                 ));
-
     }
 
     @Override
@@ -79,9 +65,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ResultsItem> {
                 .subscribe(responseResponse ->
                         {
                             if (responseResponse.body() != null) {
-                                //todo Integer key = response.body().has_more ? params.key + 1 : null;
                                 Integer key = params.key + 1;
-
                                 callback.onResult(responseResponse.body().results, key);
                             }
                         },

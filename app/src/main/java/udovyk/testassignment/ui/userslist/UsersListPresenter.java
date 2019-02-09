@@ -23,9 +23,7 @@ public class UsersListPresenter extends BasePresenter<UsersListView> {
     LiveData<PageKeyedDataSource<Integer, ResultsItem>> liveDataSource;
 
     @Inject
-    public UsersListPresenter() {
-
-    }
+    public UsersListPresenter() {}
 
     void getUsers() {
         ItemDataSourceFactory itemDataSourceFactory = new ItemDataSourceFactory(apiManager);
@@ -34,8 +32,7 @@ public class UsersListPresenter extends BasePresenter<UsersListView> {
                 (new PagedList.Config.Builder())
                         .setEnablePlaceholders(false)
                         .setPageSize(ItemDataSource.PAGE_SIZE).build();
-        itemPagedList = (new LivePagedListBuilder(itemDataSourceFactory, pagedListConfig))
-                .build();
+        itemPagedList = (new LivePagedListBuilder(itemDataSourceFactory, pagedListConfig)).build();
     }
 
     void showDetails(FragmentManager fragmentManager, ResultsItem resultsItem) {

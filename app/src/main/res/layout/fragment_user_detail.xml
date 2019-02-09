@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginTop="32dp"
-        android:text="Gender"
+        android:text="@string/gender"
         android:textSize="15sp"
         android:textColor="@color/colorGrey"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/labelGender"
         app:layout_constraintTop_toBottomOf="@+id/tvGender"
-        android:text="Date of birth" />
+        android:text="@string/date_of_birth" />
 
     <TextView
         android:id="@+id/tvDate"
@@ -88,7 +88,7 @@
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/labelGender"
         app:layout_constraintTop_toBottomOf="@+id/tvDate"
-        android:text="Phone" />
+        android:text="@string/phone" />
 
     <TextView
         android:id="@+id/tvPhone"

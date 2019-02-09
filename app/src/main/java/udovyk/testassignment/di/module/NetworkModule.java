@@ -10,6 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import udovyk.testassignment.common.Constants;
 import udovyk.testassignment.network.ApiManager;
 import udovyk.testassignment.network.ApiService;
+import udovyk.testassignment.ui.userslist.paging.ItemDataSourceFactory;
 
 @Module
 public class NetworkModule {

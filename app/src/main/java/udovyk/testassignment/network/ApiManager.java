@@ -12,7 +12,7 @@ public class ApiManager {
         this.apiService = apiService;
     }
 
-    public Observable<Response<UserResponse>> getUsers() {
-        return apiService.getUsers();
+    public Observable<Response<UserResponse>> getUsers(int page, int results) {
+        return apiService.getUsers(page, results);
     }
 }

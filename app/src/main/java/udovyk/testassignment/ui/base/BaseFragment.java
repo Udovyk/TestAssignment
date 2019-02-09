@@ -46,5 +46,5 @@ public abstract class BaseFragment extends MvpAppCompatFragment {
         unbinder = ButterKnife.bind(this, view);
     }
 
-    abstract int getLayoutRes();
+    public abstract int getLayoutRes();
 }

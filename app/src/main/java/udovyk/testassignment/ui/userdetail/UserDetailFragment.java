@@ -6,8 +6,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import javax.inject.Inject;
 import butterknife.BindView;
 import udovyk.testassignment.R;
 import udovyk.testassignment.network.model.ResultsItem;
@@ -21,6 +24,9 @@ public class UserDetailFragment extends BaseFragment implements UserDetailView {
     @BindView(R.id.imDetailAvatar)
     ImageView imageAvatar;
 
+    @BindView(R.id.imCall)
+    ImageView imCall;
+
     @BindView(R.id.tvDetailName)
     TextView tvName;
 
@@ -33,7 +39,12 @@ public class UserDetailFragment extends BaseFragment implements UserDetailView {
     @BindView(R.id.tvPhone)
     TextView tvPhone;
 
+    @Inject
+    @InjectPresenter
+    UserDetailPresenter presenter;
 
+    @ProvidePresenter
+    UserDetailPresenter providePresenter() { return presenter; }
 
     public static UserDetailFragment newInstance(ResultsItem resultsItem) {
         Bundle bundle = new Bundle();
@@ -51,6 +62,10 @@ public class UserDetailFragment extends BaseFragment implements UserDetailView {
         super.onViewCreated(view, savedInstanceState);
             resultsItem = getArguments().getParcelable(RESULT_ITEM);
         initUi();
+
+        imCall.setOnClickListener(v -> {
+            presenter.call(resultsItem.phone);
+        });
     }
 
     void initUi() {
@@ -75,6 +90,8 @@ public class UserDetailFragment extends BaseFragment implements UserDetailView {
 
         }
     }
+
+
 
     @Override
     public int getLayoutRes() {

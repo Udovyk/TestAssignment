@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
+
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import javax.inject.Inject;
@@ -19,6 +21,8 @@ public class UsersListFragment extends BaseFragment implements UsersListView {
 
     @BindView(R.id.rvUsers)
     RecyclerView rvUsers;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     @Inject
     @InjectPresenter
@@ -47,6 +51,7 @@ public class UsersListFragment extends BaseFragment implements UsersListView {
         initRecyclerView();
 
         presenter.getUsers();
+        presenter.progressLiveData.observe(this, bool -> onProgress(bool));
         presenter.itemPagedList.observe(this, items -> adapter.submitList(items));
         rvUsers.setAdapter(adapter);
         rvUsers.addOnItemTouchListener(touchListener);
@@ -64,6 +69,10 @@ public class UsersListFragment extends BaseFragment implements UsersListView {
             }
         };
 
+    }
+
+    public void onProgress(Boolean b) {
+        progressBar.setVisibility(b ? View.VISIBLE : View.GONE);
     }
 
     @Override

@@ -13,23 +13,28 @@ public class ItemDataSourceFactory extends DataSource.Factory {
     private MutableLiveData<PageKeyedDataSource<Integer, ResultsItem>> itemLiveDataSource = new MutableLiveData<>();
     private ApiManager apiManager;
 
+    ItemDataSource itemDataSource;
+
     @Inject
     public ItemDataSourceFactory(ApiManager apiManager) {
         this.apiManager = apiManager;
+        this.itemDataSource = new ItemDataSource(apiManager);
     }
+
 
 
     @Override
     public DataSource<Integer, ResultsItem> create() {
-        ItemDataSource itemDataSource = new ItemDataSource(apiManager);
-
         itemLiveDataSource.postValue(itemDataSource);
-
         return itemDataSource;
     }
 
 
     public MutableLiveData<PageKeyedDataSource<Integer, ResultsItem>> getItemLiveDataSource() {
         return itemLiveDataSource;
+    }
+
+    public ItemDataSource getItemDataSource() {
+        return itemDataSource;
     }
 }

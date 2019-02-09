@@ -1,5 +1,6 @@
 package udovyk.testassignment.ui.userslist.paging;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.paging.PageKeyedDataSource;
 import android.support.annotation.NonNull;
 import javax.inject.Inject;
@@ -12,6 +13,7 @@ import udovyk.testassignment.network.model.ResultsItem;
 public class ItemDataSource extends PageKeyedDataSource<Integer, ResultsItem> {
 
     private CompositeDisposable disposable = new CompositeDisposable();
+    private MutableLiveData<Boolean> progressLiveData = new MutableLiveData<>();
     private ApiManager apiManager;
     public static final int PAGE_SIZE = 20;
     public static final int FIRST_PAGE = 1;
@@ -23,13 +25,14 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ResultsItem> {
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, ResultsItem> callback) {
-
+        progressLiveData.postValue(true);
         disposable.add(apiManager.getUsers(FIRST_PAGE, PAGE_SIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(responseResponse ->
                         {
                             if (responseResponse.body() != null) {
+
                                 callback.onResult(responseResponse.body().results, null, FIRST_PAGE + 1);
                             }
                         },
@@ -40,7 +43,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ResultsItem> {
 
     @Override
     public void loadBefore(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, ResultsItem> callback) {
-
+        progressLiveData.postValue(true);
         disposable.add(apiManager.getUsers(FIRST_PAGE, PAGE_SIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -48,7 +51,6 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ResultsItem> {
                         {
                             if (responseResponse.body() != null) {
                                 Integer adjacentKey = (params.key > 1) ? params.key - 1 : null;
-
                                 callback.onResult(responseResponse.body().results, adjacentKey);
                             }
                         },
@@ -58,18 +60,22 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, ResultsItem> {
 
     @Override
     public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, ResultsItem> callback) {
-
         disposable.add(apiManager.getUsers(FIRST_PAGE, PAGE_SIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(responseResponse ->
                         {
                             if (responseResponse.body() != null) {
+                                progressLiveData.postValue(false);
                                 Integer key = params.key + 1;
                                 callback.onResult(responseResponse.body().results, key);
                             }
                         },
                         Throwable::printStackTrace
                 ));
+    }
+
+    public MutableLiveData<Boolean> getprogressLiveData() {
+        return progressLiveData;
     }
 }

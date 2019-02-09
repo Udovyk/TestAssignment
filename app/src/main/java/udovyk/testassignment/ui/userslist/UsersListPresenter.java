@@ -21,13 +21,16 @@ public class UsersListPresenter extends BasePresenter<UsersListView> {
 
     LiveData<PagedList<ResultsItem>> itemPagedList;
     LiveData<PageKeyedDataSource<Integer, ResultsItem>> liveDataSource;
+    LiveData<Boolean> progressLiveData;
 
     @Inject
     public UsersListPresenter() {}
 
     void getUsers() {
         ItemDataSourceFactory itemDataSourceFactory = new ItemDataSourceFactory(apiManager);
+        progressLiveData = itemDataSourceFactory.getItemDataSource().getprogressLiveData();
         liveDataSource = itemDataSourceFactory.getItemLiveDataSource();
+
         PagedList.Config pagedListConfig =
                 (new PagedList.Config.Builder())
                         .setEnablePlaceholders(false)
